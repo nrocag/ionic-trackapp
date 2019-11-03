@@ -14,6 +14,19 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+  },
+  {
+    path: 'mapdevice',
+    loadChildren: () => import('./mapdevice/mapdevice.module').then(m => m.MapdevicePageModule)
+    //loadChildren: './mapdevice/mapdevice.module#MapdevicePageModule'
+  },
+  {
+    path: 'deviceadmin',
+    loadChildren: () => import('./deviceadmin/deviceadmin.module').then(m => m.DeviceadminPageModule)
+  },
+  {
+    path: 'deviceslist',
+    loadChildren: () => import('./deviceslist/deviceslist.module').then(m => m.DeviceslistPageModule)
   }
 ];
 
@@ -23,4 +36,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
