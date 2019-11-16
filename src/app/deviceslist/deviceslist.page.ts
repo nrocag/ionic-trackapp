@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../Services/api.service'
 
 @Component({
   selector: 'app-deviceslist',
@@ -7,30 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceslistPage implements OnInit {
 
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ name: string; description: string; serie: string; icon: string; stateDevice: boolean }> = [];
+  public items: [];
 
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        name: 'Item ' + i,
-        description: 'This is item #' + i,
-        serie: 'Serial ' + (i * 100),
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)],
-        stateDevice: i % 2 === 0
-      });
-    }
+  constructor(public apiService: ApiService) {
+
+  }
+
+  ionViewDidEnter() {
+    this.getList();
+  }
+
+  ngOnInit() {
+    this.getList();
+  }
+
+  public getList() {
+    this.apiService.getDevices().subscribe(response => {
+      console.log("Response", response);
+      this.items = response;
+    });
   }
 
   public editDevice(item: any) {
@@ -38,10 +34,9 @@ export class DeviceslistPage implements OnInit {
   }
 
   public removeDevice(item: any) {
-
+    this.apiService.deleteDevice(item._id).subscribe(response => {
+      console.log("Response", response);
+      this.getList();
+    });
   }
-
-  ngOnInit() {
-  }
-
 }

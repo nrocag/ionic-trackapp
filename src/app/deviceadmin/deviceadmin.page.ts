@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../Services/api.service'
+import { Device } from '../Models/device';
+import { NavController } from '@ionic/angular'
 
 @Component({
   selector: 'app-deviceadmin',
@@ -7,16 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceadminPage implements OnInit {
 
-  public device: any = {
+  public device: Device = {
     category: 0,
     description: "",
     id: 0,
     name: "",
     serie: "",
-    stateDevice: true
+    stateDevice: true,
+    _id: ""
   }
 
-  constructor() {
+  constructor(public apiService: ApiService,
+    public navController: NavController) {
     //this.device.name = "Luis";
   }
 
@@ -24,6 +29,14 @@ export class DeviceadminPage implements OnInit {
   }
 
   submitForm() {
-    console.log("name", this.device);
+    try {
+      console.log("device", this.device);
+      this.apiService.createDevice(this.device).subscribe(response => {
+        console.log("Response", response);
+        this.navController.back();
+      });
+    } catch (error) {
+      console.error("Error", error);
+    }
   }
 }
