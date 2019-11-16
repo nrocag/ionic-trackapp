@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceadminPage implements OnInit {
 
-  constructor() { }
+  public device: any = {
+    category: 0,
+    description: "",
+    id: 0,
+    name: "",
+    serie: "",
+    stateDevice: true
+  }
+
+  constructor() {
+    //this.device.name = "Luis";
+  }
 
   ngOnInit() {
   }
 
+  submitForm() {
+    console.log("name", this.device);
+  }
 }

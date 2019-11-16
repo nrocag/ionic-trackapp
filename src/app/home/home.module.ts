@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
-import { HeaderComponent } from '../header/header.component'
+//import { ComponentsModule } from '../components/components.module'
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    //ComponentsModule,
     RouterModule.forChild([
       {
         path: '',
