@@ -3,7 +3,8 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of items">
       <ion-item>
-        <ion-icon [color]="item.stateDevice ? 'primary' : 'medium'" [name]="item.icon" slot="start"></ion-icon>
+        <ion-icon [color]="item.stateDevice ? 'primary' : 'medium'" [name]="item.icon" slot="start">
+        </ion-icon>
         <ion-label>{{item.name}} - {{item.serie}}</ion-label>
       </ion-item>
       <ion-item-options side="end">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../Services/api.service'
-import { Device } from '../Models/device';
-import { NavController } from '@ionic/angular'
+import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-deviceadmin',
@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular'
 })
 export class DeviceadminPage implements OnInit {
 
-  public device: Device = {
+  public device: any = {
     category: 0,
     description: "",
     id: 0,
@@ -20,21 +20,38 @@ export class DeviceadminPage implements OnInit {
     _id: ""
   }
 
-  constructor(public apiService: ApiService,
-    public navController: NavController) {
-    //this.device.name = "Luis";
+  constructor(public apiService: ApiService, public navController: NavController, public router: ActivatedRoute) {
+
   }
 
   ngOnInit() {
+    this.router.paramMap.subscribe(params => {
+      //console.log("edit params", params.get("item"));
+      this.device.name = params.get("name");
+      this.device._id = params.get("id");
+      this.device.description = params.get("description");
+      this.device.category = params.get("category");
+      this.device.serie = params.get("serie");
+
+      console.log("device", this.device);
+    });
   }
 
   submitForm() {
     try {
       console.log("device", this.device);
-      this.apiService.createDevice(this.device).subscribe(response => {
-        console.log("Response", response);
-        this.navController.back();
-      });
+      if (this.device._id == "") {
+        this.apiService.createDevice(this.device).subscribe(response => {
+          console.log("Response", response);
+          this.navController.back();
+        });
+      }
+      else {
+        this.apiService.editDevice(this.device).subscribe(response => {
+          console.log("Response", response);
+          this.navController.back();
+        });
+      }
     } catch (error) {
       console.error("Error", error);
     }

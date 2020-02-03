@@ -47,4 +47,14 @@ export class ApiService {
         retry(2), catchError(this.handleError)
       )
   }
+
+  public editDevice(item: Device): Observable<any> {
+    return this.http.put(
+      `${this.baseApi}`,
+      JSON.stringify(item),
+      this.httpOptions)
+      .pipe(
+        retry(2), catchError(this.handleError)
+      )
+  }
 }
